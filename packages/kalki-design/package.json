@@ -1,0 +1,52 @@
+{
+  "name": "kalki-design",
+  "version": "0.0.1",
+  "description": "Kalki Design System component library",
+  "private": false,
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./tokens.css": "./dist/tokens.css"
+  },
+  "files": ["dist", "src"],
+  "scripts": {
+    "build": "tsdown && cp src/tokens.css dist/tokens.css",
+    "dev": "tsdown --watch"
+  },
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19"
+  },
+  "devDependencies": {
+    "tsdown": "^0.21.4",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@phosphor-icons/react": "^2.1.7",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^3.0.0"
+  },
+  "keywords": [
+    "react",
+    "design-system",
+    "components",
+    "ui",
+    "kalki",
+    "tailwind"
+  ],
+  "license": "MIT"
+}

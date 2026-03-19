@@ -1,0 +1,60 @@
+/* ─── Breadcrumbs ────────────────────────────────────── */
+.breadcrumbs {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ─── Link ───────────────────────────────────────────── */
+.link {
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  outline: none;
+  border-radius: var(--radius-sm);
+}
+
+.link:hover {
+  color: var(--color-text-primary);
+}
+
+.link:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+/* ─── Current ────────────────────────────────────────── */
+.current {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ─── Separator ──────────────────────────────────────── */
+.separator {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-placeholder);
+}
+
+/* ─── Ellipsis ───────────────────────────────────────── */
+.ellipsis {
+  color: var(--color-text-tertiary);
+  letter-spacing: 2px;
+}

@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+/* Scan the component library source for Tailwind classes */
+@source "../../packages/kalki-design/src/**/*.tsx";
+
+/* Class-based dark mode for next-themes compatibility */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =====================
+   Tailwind v4 theme: two-layer approach
+
+   Layer 1: @theme inline registers color names with initial (light) values
+            so Tailwind generates utility classes like bg-primary, text-foreground
+
+   Layer 2: :root re-declares with !important-free cascade
+            .dark overrides for dark mode
+
+   The trick: @theme inline outputs on *, so we use @layer to control cascade
+   ===================== */
+@theme inline {
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Font family */
+  --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
+  --font-mono: ui-monospace, 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Register color token names — values come from custom properties below */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+/* =====================
+   Light mode tokens (default)
+   Uses bare names (--primary, --foreground, etc.)
+   @theme inline maps these to --color-* via var()
+   ===================== */
+:root {
+  --background: #ffffff;
+  --foreground: #09090b;
+  --card: #ffffff;
+  --card-foreground: #09090b;
+  --primary: #232122;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #27272a;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #f4f4f5;
+  --accent-foreground: #27272a;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --success: #16a34a;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #09090b;
+  --info: #0ea5e9;
+  --info-foreground: #ffffff;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #232122;
+
+  /* Navanta / Christy Tokens */
+  --brand-primary: #6440B6;
+  --brand-purple-deep: #3b0764;
+  
+  --surface-base: #ffffff;
+  --surface-raised: #f8fafc;
+  --surface-sunken: #f1f5f9;
+  --surface-hover: #f1f5f9;
+  --surface-accent: #f5f3ff;
+  --surface-info: #eff6ff;
+  --surface-success-alt: #ecfdf5;
+  --surface-danger-alt: #fef2f2;
+
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-neutral: #94a3b8;
+  --text-accent: #6440B6;
+  --text-accent-dark: #4d3290;
+  --text-danger-vivid: #ef4444;
+  --text-inverse-muted: #e2e8f0;
+
+  --border-default: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  --shadow-menu: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-modal: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-focus: 0 0 0 3px rgba(100, 64, 182, 0.1);
+
+  --btn-primary-bg: #232122;
+  --btn-primary-bg-hover: #000000;
+  --btn-primary-text: #ffffff;
+  --btn-primary-disabled-bg: #e2e8f0;
+  --btn-primary-disabled-text: #94a3b8;
+
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-border: #e2e8f0;
+  --btn-secondary-hover-bg: #f8fafc;
+
+  --gradient-brand: linear-gradient(135deg, #6440B6 0%, #3b0764 100%);
+  --gradient-progress-green: linear-gradient(90deg, #10b981 0%, #059669 100%);
+  --gradient-progress-amber: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+  --gradient-progress-red: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+  --gradient-progress-blue: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+}
+
+/* =====================
+   Dark mode overrides
+   ===================== */
+.dark {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #18181b;
+  --card-foreground: #fafafa;
+  --primary: #fafafa;
+  --primary-foreground: #232122;
+  --secondary: #27272a;
+  --secondary-foreground: #fafafa;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
+  --destructive: #f87171;
+  --destructive-foreground: #09090b;
+  --success: #4ade80;
+  --success-foreground: #09090b;
+  --warning: #fbbf24;
+  --warning-foreground: #09090b;
+  --info: #38bdf8;
+  --info-foreground: #09090b;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #fafafa;
+}
+
+/* =====================
+   Base styles
+   ===================== */
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+* {
+  border-color: var(--border);
+}
+
+.gradient-text {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-badge {
+  background: var(--gradient-brand);
+}
+
+.christy-btn-primary {
+  background: var(--gradient-brand);
+  color: white;
+  transition: opacity 0.2s ease;
+}
+
+.christy-btn-primary:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+@keyframes christy-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toast-slide-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* Hide scrollbar but allow scrolling */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

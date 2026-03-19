@@ -1,0 +1,116 @@
+/* ─── Wrapper ────────────────────────────────────────── */
+.wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+/* ─── Tooltip ────────────────────────────────────────── */
+.tooltip {
+  position: absolute;
+  z-index: var(--z-tooltip);
+  padding: var(--space-xs) var(--space-sm);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-on-primary);
+  background: var(--color-text-primary);
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: fadeIn 120ms var(--ease-smooth);
+  box-shadow: var(--shadow-md);
+}
+
+/* ─── Arrow ──────────────────────────────────────────── */
+.arrow {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--color-text-primary);
+  transform: rotate(45deg);
+}
+
+/* ─── Side: Top ──────────────────────────────────────── */
+.top {
+  bottom: calc(100% + 8px);
+}
+
+.top .arrow {
+  bottom: -4px;
+  left: 50%;
+  margin-left: -4px;
+}
+
+/* ─── Side: Bottom ───────────────────────────────────── */
+.bottom {
+  top: calc(100% + 8px);
+}
+
+.bottom .arrow {
+  top: -4px;
+  left: 50%;
+  margin-left: -4px;
+}
+
+/* ─── Side: Left ─────────────────────────────────────── */
+.left {
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.left .arrow {
+  right: -4px;
+  top: 50%;
+  margin-top: -4px;
+}
+
+/* ─── Side: Right ────────────────────────────────────── */
+.right {
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.right .arrow {
+  left: -4px;
+  top: 50%;
+  margin-top: -4px;
+}
+
+/* ─── Alignment ──────────────────────────────────────── */
+.top.align_center,
+.bottom.align_center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.top.align_start,
+.bottom.align_start {
+  left: 0;
+}
+
+.top.align_start .arrow,
+.bottom.align_start .arrow {
+  left: 12px;
+  margin-left: 0;
+}
+
+.top.align_end,
+.bottom.align_end {
+  right: 0;
+  left: auto;
+}
+
+.top.align_end .arrow,
+.bottom.align_end .arrow {
+  right: 12px;
+  left: auto;
+  margin-left: 0;
+}
+
+/* ─── Animation ──────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

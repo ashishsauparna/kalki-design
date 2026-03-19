@@ -1,0 +1,12 @@
+{
+  "name": "kalkidesign-monorepo",
+  "private": true,
+  "workspaces": [
+    "docs",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w docs",
+    "build": "npm run build -w docs"
+  }
+}

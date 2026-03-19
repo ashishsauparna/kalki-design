@@ -1,0 +1,111 @@
+/* Kalki Design System — Design Tokens */
+/* Import this file to get all CSS custom properties for the design system. */
+/* Usage: import 'kalki-design/tokens.css' */
+
+/* =====================
+   Light mode tokens
+   ===================== */
+:root {
+  /* Base surfaces */
+  --background:           oklch(1 0 0);           /* white */
+  --foreground:           oklch(0.145 0 0);        /* zinc-950 */
+
+  /* Card surfaces */
+  --card:                 oklch(1 0 0);            /* white */
+  --card-foreground:      oklch(0.145 0 0);        /* zinc-950 */
+
+  /* Primary — blue accent */
+  --primary:              oklch(0.546 0.245 264.1); /* blue-600 */
+  --primary-foreground:   oklch(1 0 0);             /* white */
+
+  /* Secondary — zinc-100 */
+  --secondary:            oklch(0.968 0.007 247);   /* zinc-100 */
+  --secondary-foreground: oklch(0.21 0.006 285.8);  /* zinc-800 */
+
+  /* Muted — subtle backgrounds */
+  --muted:                oklch(0.968 0.007 247);   /* zinc-100 */
+  --muted-foreground:     oklch(0.552 0.016 285.9); /* zinc-500 */
+
+  /* Accent — interactive highlights */
+  --accent:               oklch(0.968 0.007 247);   /* zinc-100 */
+  --accent-foreground:    oklch(0.21 0.006 285.8);  /* zinc-800 */
+
+  /* Destructive — danger/error */
+  --destructive:          oklch(0.577 0.245 27.3);  /* red-600 */
+  --destructive-foreground: oklch(1 0 0);           /* white */
+
+  /* Success — green */
+  --success:              oklch(0.527 0.154 150.1); /* green-600 */
+  --success-foreground:   oklch(1 0 0);             /* white */
+
+  /* Warning — amber */
+  --warning:              oklch(0.769 0.188 70.1);  /* amber-400 */
+  --warning-foreground:   oklch(0.145 0 0);         /* zinc-950 */
+
+  /* Info — sky blue */
+  --info:                 oklch(0.588 0.177 237.3); /* sky-500 */
+  --info-foreground:      oklch(1 0 0);             /* white */
+
+  /* Form/interaction tokens */
+  --border:               oklch(0.92 0.004 286.3);  /* zinc-200 */
+  --input:                oklch(0.92 0.004 286.3);  /* zinc-200 */
+  --ring:                 oklch(0.546 0.245 264.1); /* blue-600 */
+
+  /* Radius */
+  --radius:               0.5rem;
+  --radius-sm:            0.25rem;
+  --radius-md:            0.5rem;
+  --radius-lg:            0.75rem;
+  --radius-xl:            1rem;
+  --radius-full:          9999px;
+}
+
+/* =====================
+   Dark mode overrides
+   ===================== */
+.dark {
+  /* Base surfaces */
+  --background:           oklch(0.145 0 0);         /* zinc-950 */
+  --foreground:           oklch(0.985 0 0);          /* zinc-50 */
+
+  /* Card surfaces */
+  --card:                 oklch(0.205 0.006 285.9);  /* zinc-900 */
+  --card-foreground:      oklch(0.985 0 0);          /* zinc-50 */
+
+  /* Primary — lighter blue for dark bg contrast */
+  --primary:              oklch(0.623 0.214 259.8);  /* blue-500 */
+  --primary-foreground:   oklch(0.145 0 0);          /* zinc-950 */
+
+  /* Secondary */
+  --secondary:            oklch(0.269 0.008 286.0);  /* zinc-800 */
+  --secondary-foreground: oklch(0.985 0 0);          /* zinc-50 */
+
+  /* Muted */
+  --muted:                oklch(0.269 0.008 286.0);  /* zinc-800 */
+  --muted-foreground:     oklch(0.703 0.015 286.1);  /* zinc-400 */
+
+  /* Accent */
+  --accent:               oklch(0.269 0.008 286.0);  /* zinc-800 */
+  --accent-foreground:    oklch(0.985 0 0);           /* zinc-50 */
+
+  /* Destructive */
+  --destructive:          oklch(0.704 0.191 22.2);   /* red-400 */
+  --destructive-foreground: oklch(0.145 0 0);        /* zinc-950 */
+
+  /* Success */
+  --success:              oklch(0.627 0.167 149.6);  /* green-400 */
+  --success-foreground:   oklch(0.145 0 0);          /* zinc-950 */
+
+  /* Warning */
+  --warning:              oklch(0.828 0.189 84.4);   /* amber-300 */
+  --warning-foreground:   oklch(0.145 0 0);          /* zinc-950 */
+
+  /* Info */
+  --info:                 oklch(0.685 0.169 237.3);  /* sky-400 */
+  --info-foreground:      oklch(0.145 0 0);          /* zinc-950 */
+
+  /* Form/interaction tokens */
+  --border:               oklch(0.269 0.008 286.0);  /* zinc-800 */
+  --input:                oklch(0.269 0.008 286.0);  /* zinc-800 */
+  --ring:                 oklch(0.623 0.214 259.8);  /* blue-500 */
+}

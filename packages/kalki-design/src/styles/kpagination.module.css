@@ -1,0 +1,102 @@
+/* ─── Pagination ─────────────────────────────────────── */
+.pagination {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  font-family: var(--font-primary);
+}
+
+/* ─── Item ───────────────────────────────────────────── */
+.item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  outline: none;
+  user-select: none;
+}
+
+.item:hover:not(:disabled):not(.active) {
+  background: var(--color-bg-hover);
+  color: var(--color-text-primary);
+}
+
+.item:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+.item:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.active {
+  background: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-default);
+}
+
+/* ─── Arrow ──────────────────────────────────────────── */
+.arrow {
+  color: var(--color-text-tertiary);
+}
+
+.arrow:hover:not(:disabled) {
+  color: var(--color-text-primary);
+  background: var(--color-bg-hover);
+}
+
+/* ─── Dots ───────────────────────────────────────────── */
+.dots {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-sm);
+  letter-spacing: 2px;
+  user-select: none;
+}
+
+/* ─── Sizes ──────────────────────────────────────────── */
+.sm .item {
+  min-width: 28px;
+  height: 28px;
+  font-size: var(--font-size-xs);
+}
+
+.sm .dots {
+  min-width: 28px;
+  height: 28px;
+}
+
+.md .item {
+  min-width: 34px;
+  height: 34px;
+  font-size: var(--font-size-sm);
+}
+
+.md .dots {
+  min-width: 34px;
+  height: 34px;
+}
+
+.lg .item {
+  min-width: 40px;
+  height: 40px;
+  font-size: var(--font-size-base);
+}
+
+.lg .dots {
+  min-width: 40px;
+  height: 40px;
+}
