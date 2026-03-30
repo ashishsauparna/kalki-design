@@ -3,7 +3,7 @@
 import { useState, useEffect, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { X, ArrowSquareOut } from "@phosphor-icons/react";
-import { Tooltip } from "../Tooltip";
+import { Tooltip } from "../../Tooltip";
 
 interface DetailPanelShellProps {
   open: boolean;

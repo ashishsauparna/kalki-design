@@ -26,7 +26,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 // 1. Import your standard global styles (including standard Tailwind)
 import "./globals.css";
 // 2. Import the Kalki Design design system tokens
-import "kalki-design/tokens.css"; 
+import "kalki-design/styles.css"; 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

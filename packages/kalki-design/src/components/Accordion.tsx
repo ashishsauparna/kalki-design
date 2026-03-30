@@ -19,14 +19,14 @@ export interface AccordionProps {
 
 const variantClasses = {
   default: '',
-  bordered: 'border border-border rounded-lg overflow-hidden',
+  bordered: 'border border-border rounded-md overflow-hidden',
   separated: '',
 };
 
 const itemClasses = {
   default: 'border-b border-border last:border-b-0',
   bordered: 'border-b border-border last:border-b-0',
-  separated: 'border border-border rounded-lg mb-4 overflow-hidden last:mb-0',
+  separated: 'border border-border rounded-md mb-4 overflow-hidden last:mb-0',
 };
 
 const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(({
@@ -68,7 +68,7 @@ const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(({
               type="button"
               id={headerId}
               className={cn(
-                'flex items-center justify-between w-full py-4 px-4 bg-transparent cursor-pointer text-left text-foreground text-sm font-medium transition-colors hover:bg-muted/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:cursor-not-allowed'
+                'flex items-center justify-between w-full py-4 px-4 bg-transparent cursor-pointer text-left text-foreground text-sm font-medium transition-colors hover:bg-muted/50 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:cursor-not-allowed'
               )}
               onClick={() => !item.disabled && toggle(index)}
               aria-expanded={isOpen}

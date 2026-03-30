@@ -26,6 +26,8 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       value,
       defaultValue,
       onChange,
+      onFocus,
+      onBlur,
       disabled,
       ...props
     },
@@ -66,7 +68,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         {label && (
           <label
             htmlFor={id}
-            className="text-xs font-medium text-muted-foreground px-0.5"
+            className="text-xs font-normal text-muted-foreground px-0.5"
           >
             {label}
           </label>
@@ -79,14 +81,25 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             defaultValue={defaultValue}
             onChange={onChange}
             onInput={handleInput}
+            onFocus={(e) => {
+              e.currentTarget.style.borderColor = '#000'
+              onFocus?.(e)
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = ''
+              onBlur?.(e)
+            }}
             disabled={disabled}
             aria-invalid={hasError || undefined}
             aria-describedby={displayHelper ? helperId : undefined}
             className={cn(
-              'flex w-full rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground transition-colors resize-none overflow-y-auto',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
+              'flex w-full rounded-md border border-input bg-white px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground transition-[border-color,color,box-shadow] resize-none overflow-y-auto outline-none',
+              'focus:!border-[#000] focus:ring-ring/50 focus:ring-[3px]',
+              'focus-visible:!border-[#000] focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+              'active:!border-[#000] active:ring-ring/30 active:ring-[2px]',
               'disabled:cursor-not-allowed disabled:opacity-50',
-              hasError && 'border-destructive focus-visible:ring-destructive',
+              hasError &&
+                'border-destructive focus:ring-destructive/20 dark:focus:ring-destructive/40 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 active:ring-destructive/20',
               className
             )}
             style={{ minHeight: MIN_HEIGHT, maxHeight: MAX_HEIGHT }}

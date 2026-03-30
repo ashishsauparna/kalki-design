@@ -13,15 +13,15 @@ interface CodeBlockProps {
 export async function CodeBlock({ code, lang = 'tsx' }: CodeBlockProps) {
   const html = await codeToHtml(code, {
     lang,
-    theme: 'github-dark-default',
+    theme: 'github-light',
   })
 
   return (
-    <div className="relative group rounded-lg overflow-hidden border border-border">
+    <div className="relative group rounded-[8px] overflow-hidden">
       <CopyButton code={code} />
       <div
         dangerouslySetInnerHTML={{ __html: html }}
-        className="[&_pre]:p-4 [&_pre]:overflow-x-auto [&_pre]:text-sm [&_pre]:leading-relaxed [&_code]:font-mono"
+        className="[&_pre]:!bg-[#f9f9f9] dark:[&_pre]:!bg-zinc-950 [&_pre]:p-4 [&_pre]:overflow-x-auto [&_pre]:text-sm [&_pre]:leading-relaxed [&_code]:font-mono"
       />
     </div>
   )

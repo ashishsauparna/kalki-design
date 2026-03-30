@@ -46,7 +46,7 @@ export function TextInput({
   };
 
   const borderColor = error ? "var(--text-danger-vivid)" : "var(--border-strong)";
-  const focusBorderColor = error ? "var(--text-danger-vivid)" : "var(--brand-primary)";
+  const focusBorderColor = error ? "var(--text-danger-vivid)" : "#000000";
   const focusShadow = error
     ? "0 0 0 3px rgba(239,68,68,0.1)"
     : "var(--shadow-focus)";

@@ -102,8 +102,26 @@ export function MobileNav() {
 
             <nav className="space-y-6">
               <div>
+                <SidebarLink href="/about-kalki">
+                  About Kalki Design
+                </SidebarLink>
                 <SidebarLink href="/getting-started">
                   Getting Started
+                </SidebarLink>
+                <SidebarLink href="/resources">
+                  Resources
+                </SidebarLink>
+                <SidebarLink href="/theme">
+                  Theme
+                </SidebarLink>
+                <SidebarLink href="/grid-layout">
+                  Grid &amp; Layout
+                </SidebarLink>
+                <SidebarLink href="/validation">
+                  Validation
+                </SidebarLink>
+                <SidebarLink href="/accessibility">
+                  Accessibility
                 </SidebarLink>
               </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { Info } from "@phosphor-icons/react";
-import { Tooltip } from "./Tooltip";
+import { Tooltip } from "../Tooltip";
 
 /* ─────────────────────────────────────────────
  *  Built-in progress bar gradient variants

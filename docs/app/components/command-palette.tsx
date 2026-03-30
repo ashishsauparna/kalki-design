@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { componentRegistry } from '@/lib/component-registry'
+import { Input } from 'kalki-design'
 
 export function CommandPalette() {
   const [isOpen, setIsOpen] = useState(false)
@@ -97,13 +98,13 @@ export function CommandPalette() {
       >
         {/* Search input */}
         <div className="border-b border-border">
-          <input
+          <Input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search components..."
-            className="w-full bg-transparent px-4 py-3 text-sm outline-none placeholder:text-muted-foreground text-foreground"
+            className="h-11 rounded-none border-0 bg-transparent px-4 text-sm shadow-none focus:ring-0 focus-visible:ring-0 active:ring-0"
             aria-label="Search components"
           />
         </div>

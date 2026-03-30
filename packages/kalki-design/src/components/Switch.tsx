@@ -53,7 +53,7 @@ const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
     }
 
     return (
-      <div className="flex items-start gap-2">
+      <div className={cn('flex gap-2', displayHelper ? 'items-start' : 'items-center')}>
         <button
           type="button"
           role="switch"
@@ -65,8 +65,8 @@ const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
           disabled={disabled}
           onClick={handleClick}
           className={cn(
-            'peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors mt-[1px]',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+            'peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors',
+            'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
             'disabled:cursor-not-allowed disabled:opacity-50',
             isChecked ? 'bg-primary' : 'bg-input',
             className
@@ -90,7 +90,7 @@ const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
                   handleClick(e as any)
                 }}
                 className={cn(
-                  'text-sm font-medium leading-none cursor-pointer',
+                  'relative top-px text-sm font-medium leading-none cursor-pointer',
                   disabled && 'cursor-not-allowed opacity-50'
                 )}
               >

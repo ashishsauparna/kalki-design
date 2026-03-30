@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { componentRegistry } from '@/lib/component-registry'
-import { cn } from 'kalki-design'
+import { cn, Input } from 'kalki-design'
 
 export function ComponentGrid() {
   const [query, setQuery] = useState('')
@@ -19,12 +19,12 @@ export function ComponentGrid() {
 
   return (
     <div>
-      <input
+      <Input
         type="search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search components..."
-        className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring mb-6"
+        className="mb-6 h-11 rounded-lg px-4 text-sm focus-visible:ring-2"
       />
 
       {filtered.length === 0 ? (

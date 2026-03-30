@@ -1,6 +1,14 @@
 'use client'
 
-import { cn } from 'kalki-design'
+import {
+  Checkbox,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from 'kalki-design'
 import type { KnobDef } from '@/lib/component-registry'
 
 interface KnobPanelProps {
@@ -12,52 +20,59 @@ interface KnobPanelProps {
 export function KnobPanel({ knobs, values, onChange }: KnobPanelProps) {
   if (knobs.length === 0) return null
 
+  const toLabel = (name: string) =>
+    name
+      .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+      .replace(/[_-]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(/\b\w/g, (c) => c.toUpperCase())
+
   return (
-    <div className="grid grid-cols-2 gap-4 p-4 rounded-lg border border-border bg-muted/30">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
       {knobs.map((knob) => {
         const value = values[knob.name]
+        const fieldLabel = toLabel(knob.name)
+        const heading = knob.type === 'boolean' ? 'State' : fieldLabel
 
         return (
-          <div key={knob.name} className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-muted-foreground capitalize">
-              {knob.name}
+          <div key={knob.name} className="flex w-full flex-col items-start gap-1.5">
+            <label className="text-xs font-medium text-[#71717a] dark:text-muted-foreground">
+              {heading}
             </label>
 
             {knob.type === 'select' && (
-              <select
+              <Select
                 value={value as string}
-                onChange={(e) => onChange(knob.name, e.target.value)}
-                className={cn(
-                  'w-full rounded-md border border-input bg-background px-3 py-1.5 text-sm',
-                  'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1',
-                )}
+                onValueChange={(nextValue: string) => onChange(knob.name, nextValue)}
               >
-                {knob.options?.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger size="sm" className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {knob.options?.map((option) => (
+                    <SelectItem key={option} value={option}>
+                      {toLabel(option)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             )}
 
             {knob.type === 'boolean' && (
-              <input
-                type="checkbox"
+              <Checkbox
                 checked={value as boolean}
                 onChange={(e) => onChange(knob.name, e.target.checked)}
-                className="h-4 w-4 rounded border border-input accent-primary"
+                label={fieldLabel}
               />
             )}
 
             {knob.type === 'text' && (
-              <input
+              <Input
                 type="text"
                 value={value as string}
                 onChange={(e) => onChange(knob.name, e.target.value)}
-                className={cn(
-                  'w-full rounded-md border border-input bg-background px-3 py-1.5 text-sm',
-                  'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1',
-                )}
+                className="h-8 w-full text-sm"
               />
             )}
           </div>

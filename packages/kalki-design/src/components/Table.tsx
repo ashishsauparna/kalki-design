@@ -1,8 +1,8 @@
+"use client"
 import React, { forwardRef, createContext, useContext } from 'react';
 import { CaretUp, CaretDown, CaretUpDown } from '@phosphor-icons/react';
-import styles from '../styles/table.module.css';
+import { cn } from '../utils/cn';
 
-/* ─── Context ────────────────────────────────────────── */
 interface TableContextValue {
   striped: boolean;
   hoverable: boolean;
@@ -17,7 +17,6 @@ const TableContext = createContext<TableContextValue>({
   stickyHeader: false,
 });
 
-/* ─── Table Root ─────────────────────────────────────── */
 export interface TableProps extends React.TableHTMLAttributes<HTMLTableElement> {
   striped?: boolean;
   hoverable?: boolean;
@@ -38,18 +37,12 @@ const TableRoot = forwardRef<HTMLTableElement, TableProps>(
     },
     ref
   ) => {
-    const classNames = [
-      styles.table,
-      compact && styles.compact,
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
-
     return (
       <TableContext.Provider value={{ striped, hoverable, compact, stickyHeader }}>
-        <div className={styles.wrapper}>
-          <table ref={ref} className={classNames} {...props}>
+        <div className={cn("w-full overflow-x-auto border border-border rounded-lg bg-background",
+          "max-md:border-none max-md:rounded-none max-md:bg-transparent max-md:overflow-visible"
+        )}>
+          <table ref={ref} className={cn("w-full border-collapse text-sm text-foreground max-md:block", className)} {...props}>
             {children}
           </table>
         </div>
@@ -59,9 +52,7 @@ const TableRoot = forwardRef<HTMLTableElement, TableProps>(
 );
 TableRoot.displayName = 'Table';
 
-/* ─── Header ─────────────────────────────────────────── */
-export interface TableHeaderProps
-  extends React.HTMLAttributes<HTMLTableSectionElement> {}
+export interface TableHeaderProps extends React.HTMLAttributes<HTMLTableSectionElement> {}
 
 const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(
   ({ className, children, ...props }, ref) => {
@@ -69,7 +60,7 @@ const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(
     return (
       <thead
         ref={ref}
-        className={`${styles.header} ${stickyHeader ? styles.sticky : ''} ${className || ''}`}
+        className={cn("bg-background max-md:hidden", stickyHeader && "sticky top-0 z-10", className)}
         {...props}
       >
         {children}
@@ -79,24 +70,12 @@ const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(
 );
 TableHeader.displayName = 'TableHeader';
 
-/* ─── Body ───────────────────────────────────────────── */
-export interface TableBodyProps
-  extends React.HTMLAttributes<HTMLTableSectionElement> {}
+export interface TableBodyProps extends React.HTMLAttributes<HTMLTableSectionElement> {}
 
 const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
   ({ className, children, ...props }, ref) => {
-    const { striped, hoverable } = useContext(TableContext);
-    const classNames = [
-      styles.body,
-      striped && styles.striped,
-      hoverable && styles.hoverable,
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
-
     return (
-      <tbody ref={ref} className={classNames} {...props}>
+      <tbody ref={ref} className={cn("max-md:block", className)} {...props}>
         {children}
       </tbody>
     );
@@ -104,24 +83,26 @@ const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
 );
 TableBody.displayName = 'TableBody';
 
-/* ─── Row ────────────────────────────────────────────── */
-export interface TableRowProps
-  extends React.HTMLAttributes<HTMLTableRowElement> {
+export interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
   selected?: boolean;
 }
 
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
   ({ selected, className, children, ...props }, ref) => {
-    const classNames = [
-      styles.row,
-      selected && styles.selected,
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
-
+    const { striped, hoverable } = useContext(TableContext);
     return (
-      <tr ref={ref} className={classNames} {...props}>
+      <tr 
+        ref={ref} 
+        className={cn(
+          "border-b border-border transition-colors last:border-b-0",
+          hoverable && "hover:bg-muted/50",
+          striped && "even:bg-muted/30",
+          selected && "bg-primary/20",
+          "max-md:block max-md:bg-card max-md:border max-md:border-border max-md:rounded-lg max-md:p-3 max-md:mb-4 max-md:shadow-sm max-md:last:border-b",
+          className
+        )} 
+        {...props}
+      >
         {children}
       </tr>
     );
@@ -129,9 +110,7 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
 );
 TableRow.displayName = 'TableRow';
 
-/* ─── Head Cell ──────────────────────────────────────── */
-export interface TableHeadCellProps
-  extends React.ThHTMLAttributes<HTMLTableCellElement> {
+export interface TableHeadCellProps extends React.ThHTMLAttributes<HTMLTableCellElement> {
   sortable?: boolean;
   sortDirection?: 'asc' | 'desc' | null;
   onSort?: () => void;
@@ -140,33 +119,29 @@ export interface TableHeadCellProps
 
 const TableHeadCell = forwardRef<HTMLTableCellElement, TableHeadCellProps>(
   ({ sortable, sortDirection, onSort, align, className, children, ...props }, ref) => {
-    const classNames = [
-      styles.headCell,
-      sortable && styles.sortable,
-      align && styles[`align-${align}`],
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
-
+    const { compact } = useContext(TableContext);
     return (
       <th
         ref={ref}
-        className={classNames}
+        className={cn(
+          "text-left font-medium text-sm text-foreground border-b-2 border-border whitespace-nowrap",
+          compact ? "p-2" : "p-4",
+          align === 'center' && "text-center",
+          align === 'right' && "text-right",
+          sortable && "cursor-pointer select-none transition-colors hover:text-primary",
+          className
+        )}
         onClick={sortable ? onSort : undefined}
-        aria-sort={
-          sortDirection === 'asc'
-            ? 'ascending'
-            : sortDirection === 'desc'
-            ? 'descending'
-            : undefined
-        }
+        aria-sort={sortDirection === 'asc' ? 'ascending' : sortDirection === 'desc' ? 'descending' : undefined}
         {...props}
       >
-        <span className={styles.headCellContent}>
+        <span className={cn("flex items-center gap-2", align === 'right' && "justify-end", align === 'center' && "justify-center")}>
           {children}
           {sortable && (
-            <span className={`${styles.sortIcon} ${sortDirection ? styles.sortIconActive : ''}`} aria-hidden="true">
+            <span className={cn(
+              "inline-flex items-center transition-all",
+              sortDirection ? "opacity-100 text-primary" : "opacity-40 hover:opacity-100"
+            )} aria-hidden="true">
               {sortDirection === 'asc' ? <CaretUp weight="bold" size={12} /> : sortDirection === 'desc' ? <CaretDown weight="bold" size={12} /> : <CaretUpDown weight="bold" size={12} />}
             </span>
           )}
@@ -177,34 +152,38 @@ const TableHeadCell = forwardRef<HTMLTableCellElement, TableHeadCellProps>(
 );
 TableHeadCell.displayName = 'TableHeadCell';
 
-/* ─── Cell ───────────────────────────────────────────── */
-export interface TableCellProps
-  extends React.TdHTMLAttributes<HTMLTableCellElement> {
+export interface TableCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
   align?: 'left' | 'center' | 'right';
   mono?: boolean;
+  'data-label'?: string;
 }
 
 const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
-  ({ align, mono, className, children, ...props }, ref) => {
-    const classNames = [
-      styles.cell,
-      align && styles[`align-${align}`],
-      mono && styles.mono,
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
-
+  ({ align, mono, className, children, 'data-label': dataLabel, ...props }, ref) => {
+    const { compact } = useContext(TableContext);
     return (
-      <td ref={ref} className={classNames} {...props}>
-        {children}
+      <td 
+        ref={ref} 
+        data-label={dataLabel}
+        className={cn(
+          "text-muted-foreground align-middle",
+          compact ? "p-2" : "p-4",
+          align === 'center' && "text-center",
+          align === 'right' && "text-right",
+          mono && "font-mono text-xs tracking-tight",
+          "max-md:flex max-md:justify-between max-md:items-start max-md:py-3 max-md:px-0 max-md:border-b max-md:border-border max-md:text-right max-md:last:border-b-0",
+          className
+        )} 
+        {...props}
+      >
+        {dataLabel && <span className="md:hidden font-medium text-foreground text-xs uppercase tracking-wider text-left pr-4 opacity-80 shrink-0">{dataLabel}</span>}
+        <span className="md:contents">{children}</span>
       </td>
     );
   }
 );
 TableCell.displayName = 'TableCell';
 
-/* ─── Compound Export ────────────────────────────────── */
 const Table = Object.assign(TableRoot, {
   Header: TableHeader,
   Body: TableBody,
@@ -213,4 +192,5 @@ const Table = Object.assign(TableRoot, {
   Cell: TableCell,
 });
 
+export { Table };
 export default Table;

@@ -3,8 +3,9 @@
 import * as React from 'react'
 import { X, Info, CheckCircle, WarningCircle, Warning } from '@phosphor-icons/react'
 import { cn } from '../utils/cn'
+import { useToast, type ToastItem, type ToastPosition } from '../context/ToastContext'
 
-export type ToastType = 'info' | 'success' | 'error' | 'warning'
+export type ToastType = ToastItem['type']
 
 export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Visual type of the toast affecting border, background, and icon */
@@ -17,11 +18,17 @@ export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
   duration?: number
   /** Callback fired when the close button is clicked or duration ends */
   onClose?: () => void
+  /** Position used to determine entry/exit direction */
+  position?: ToastPosition
+  /** Controlled closing state (used by Toaster/context) */
+  dismissing?: boolean
 }
 
 export interface ToastContainerProps extends React.HTMLAttributes<HTMLDivElement> {
-  position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' | 'bottom-center'
+  position?: ToastPosition
 }
+
+const EXIT_ANIMATION_MS = 220
 
 const iconMap: Record<ToastType, React.ReactNode> = {
   info: <Info size={20} weight="fill" />,
@@ -31,10 +38,9 @@ const iconMap: Record<ToastType, React.ReactNode> = {
 }
 
 const typeClasses: Record<ToastType, string> = {
-  // Using Tailwind v4 colors
   info: 'border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-200',
   success: 'border-green-200 bg-green-50 text-green-900 dark:border-green-800 dark:bg-green-950 dark:text-green-200',
-  error: 'border-destructive/30 bg-destructive/10 text-destructive dark:border-destructive/40 dark:bg-destructive/20 dark:text-destructive-foreground',
+  error: 'border-red-200 bg-red-50 text-red-900 dark:border-red-800 dark:bg-red-950 dark:text-red-200',
   warning: 'border-yellow-200 bg-yellow-50 text-yellow-900 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-200',
 }
 
@@ -45,21 +51,74 @@ const iconColors: Record<ToastType, string> = {
   warning: 'text-yellow-500',
 }
 
-const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
-  ({ type = 'info', title, message, duration = 5000, onClose, className, ...props }, ref) => {
-    const [exiting, setExiting] = React.useState(false)
+const hiddenOffsetByPosition: Record<ToastPosition, string> = {
+  'top-right': 'sm:translate-x-6 -translate-y-2 sm:translate-y-0',
+  'top-left': 'sm:-translate-x-6 -translate-y-2 sm:translate-y-0',
+  'bottom-right': 'sm:translate-x-6 translate-y-2 sm:translate-y-0',
+  'bottom-left': 'sm:-translate-x-6 translate-y-2 sm:translate-y-0',
+  'top-center': '-translate-y-3',
+  'bottom-center': 'translate-y-3',
+}
 
-    const handleClose = React.useCallback(() => {
-      setExiting(true)
-      setTimeout(() => onClose?.(), 200)
-    }, [onClose])
+const positionClasses: Record<ToastPosition, string> = {
+  'top-right': 'top-0 right-0 items-end',
+  'top-left': 'top-0 left-0 items-start',
+  'bottom-right': 'bottom-0 right-0 items-end flex-col-reverse',
+  'bottom-left': 'bottom-0 left-0 items-start flex-col-reverse',
+  'top-center': 'top-0 left-1/2 -translate-x-1/2 items-center',
+  'bottom-center': 'bottom-0 left-1/2 -translate-x-1/2 items-center flex-col-reverse',
+}
+
+const TOAST_POSITIONS: ToastPosition[] = [
+  'top-right',
+  'top-left',
+  'bottom-right',
+  'bottom-left',
+  'top-center',
+  'bottom-center',
+]
+
+const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
+  (
+    {
+      type = 'info',
+      title,
+      message,
+      duration = 5000,
+      onClose,
+      className,
+      position = 'bottom-right',
+      dismissing = false,
+      ...props
+    },
+    ref
+  ) => {
+    const [mounted, setMounted] = React.useState(false)
+    const [isClosing, setIsClosing] = React.useState(dismissing)
 
     React.useEffect(() => {
-      if (duration > 0) {
-        const timer = setTimeout(handleClose, duration)
-        return () => clearTimeout(timer)
-      }
-    }, [duration, handleClose])
+      const raf = window.requestAnimationFrame(() => setMounted(true))
+      return () => window.cancelAnimationFrame(raf)
+    }, [])
+
+    React.useEffect(() => {
+      if (dismissing) setIsClosing(true)
+    }, [dismissing])
+
+    const requestClose = React.useCallback(() => {
+      if (isClosing || dismissing) return
+      setIsClosing(true)
+      window.setTimeout(() => onClose?.(), EXIT_ANIMATION_MS)
+    }, [isClosing, dismissing, onClose])
+
+    // Standalone auto-dismiss support
+    React.useEffect(() => {
+      if (!onClose || duration <= 0 || dismissing) return
+      const timer = window.setTimeout(requestClose, duration)
+      return () => window.clearTimeout(timer)
+    }, [duration, dismissing, onClose, requestClose])
+
+    const isOpen = mounted && !isClosing
 
     return (
       <div
@@ -67,15 +126,17 @@ const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
         role="alert"
         aria-live="assertive"
         className={cn(
-          'pointer-events-auto flex w-full items-start gap-3 rounded-lg border p-4 shadow-md transition-all sm:max-w-[420px]',
+          'pointer-events-auto flex w-full max-w-[420px] items-start gap-3 rounded-md border p-4 shadow-md transform-gpu transition-[opacity,transform] duration-200 ease-out',
           typeClasses[type],
-          exiting ? 'animate-out fade-out-0 zoom-out-95 duration-200' : 'animate-in slide-in-from-right-full sm:slide-in-from-top-full duration-300',
+          !isOpen && 'opacity-0 scale-[0.98]',
+          !isOpen && hiddenOffsetByPosition[position],
+          isOpen && 'opacity-100 translate-x-0 translate-y-0 scale-100',
           className
         )}
         {...props}
       >
         <span className={cn('mt-0.5 shrink-0', iconColors[type])}>{iconMap[type]}</span>
-        <div className="grid gap-1 flex-1">
+        <div className="grid flex-1 gap-1">
           {title && <div className="text-sm font-semibold">{title}</div>}
           {message && <div className="text-sm opacity-90">{message}</div>}
         </div>
@@ -83,7 +144,7 @@ const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
           <button
             type="button"
             className="shrink-0 rounded-md p-1 opacity-60 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-            onClick={handleClose}
+            onClick={requestClose}
             aria-label="Dismiss toast"
           >
             <X size={16} weight="bold" />
@@ -95,22 +156,13 @@ const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
 )
 Toast.displayName = 'Toast'
 
-const positionClasses = {
-  'top-right': 'top-0 right-0',
-  'top-left': 'top-0 left-0',
-  'bottom-right': 'bottom-0 right-0 flex-col-reverse',
-  'bottom-left': 'bottom-0 left-0 flex-col-reverse',
-  'top-center': 'top-0 left-1/2 -translate-x-1/2',
-  'bottom-center': 'bottom-0 left-1/2 -translate-x-1/2 flex-col-reverse',
-}
-
 const KToastContainer = React.forwardRef<HTMLDivElement, ToastContainerProps>(
   ({ position = 'top-right', className, children, ...props }, ref) => {
     return (
       <div
         ref={ref}
         className={cn(
-          'fixed z-[100] flex max-h-screen w-full flex-col gap-2 p-4 sm:max-w-[420px] pointer-events-none',
+          'fixed z-[100] flex max-h-screen w-full flex-col gap-2 p-4 pointer-events-none',
           positionClasses[position],
           className
         )}
@@ -123,22 +175,33 @@ const KToastContainer = React.forwardRef<HTMLDivElement, ToastContainerProps>(
 )
 KToastContainer.displayName = 'KToastContainer'
 
-import { useToast } from '../context/ToastContext'
-
-export function Toaster({ position = 'bottom-right' }: { position?: ToastContainerProps['position'] }) {
+export function Toaster({ position = 'bottom-right' }: { position?: ToastPosition }) {
   const { toasts, dismiss } = useToast()
 
   return (
-    <KToastContainer position={position}>
-      {toasts.map((t) => (
-        <Toast
-          key={t.id}
-          type={t.type}
-          message={t.message}
-          onClose={() => dismiss(t.id)}
-        />
-      ))}
-    </KToastContainer>
+    <>
+      {TOAST_POSITIONS.map((pos) => {
+        const items = toasts.filter((toast) => (toast.position ?? position) === pos)
+        if (items.length === 0) return null
+
+        return (
+          <KToastContainer key={pos} position={pos}>
+            {items.map((t) => (
+              <Toast
+                key={t.id}
+                type={t.type}
+                title={t.title}
+                message={t.message}
+                duration={0}
+                dismissing={Boolean(t.dismissing)}
+                position={pos}
+                onClose={() => dismiss(t.id)}
+              />
+            ))}
+          </KToastContainer>
+        )
+      })}
+    </>
   )
 }
 

@@ -2,12 +2,9 @@ export { PrimaryButton, SecondaryButton, ChristyButton, DisabledButton } from ".
 export { TrendCard } from "./TrendCard";
 export { ProgressCard } from "./ProgressCard";
 export { Dropdown } from "./Dropdown";
-export { Tabs } from "./Tabs";
 export { SearchInput } from "./SearchInput";
 export { TextInput, Textarea } from "./TextInput";
-export { Tooltip } from "./Tooltip";
 export { Modal } from "./Modal";
 export { PageHeading } from "./PageHeading";
-export { Avatar } from "./Avatar";
 export { TableShell } from "./TableShell";
 export { ToastContainer } from "./Toast";

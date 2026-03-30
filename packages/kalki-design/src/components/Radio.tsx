@@ -33,8 +33,8 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
     const displayHelper = errorMessage ?? helperText
 
     return (
-      <div className="flex items-start gap-2">
-        <div className="relative flex items-center mt-[3px]">
+      <div className={cn('flex gap-2', displayHelper ? 'items-start' : 'items-center')}>
+        <div className="relative flex items-center">
           <input
             id={id}
             type="radio"
@@ -44,7 +44,7 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
             aria-describedby={displayHelper ? helperId : undefined}
             className={cn(
               'peer size-4 shrink-0 rounded-full border border-input bg-background ring-offset-background appearance-none transition-colors cursor-pointer',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
+              'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
               'disabled:cursor-not-allowed disabled:opacity-50',
               hasError && 'border-destructive focus-visible:ring-destructive',
               className
@@ -62,7 +62,7 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
               <label
                 htmlFor={id}
                 className={cn(
-                  'text-sm font-medium leading-none cursor-pointer',
+                  'relative top-px text-sm font-medium leading-none cursor-pointer',
                   disabled && 'cursor-not-allowed opacity-50'
                 )}
               >

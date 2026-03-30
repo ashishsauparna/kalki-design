@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import styles from '../../styles/layout.module.css';
+import { cn } from '../../utils/cn';
 
 export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
@@ -7,31 +7,28 @@ export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const sizeMap = {
-  sm: 'var(--container-sm)',
-  md: 'var(--container-md)',
-  lg: 'var(--container-lg)',
-  xl: 'var(--container-xl)',
-  full: '100%',
+  sm: 'max-w-screen-sm',
+  md: 'max-w-screen-md',
+  lg: 'max-w-screen-lg',
+  xl: 'max-w-screen-xl',
+  full: 'max-w-full',
 } as const;
 
 const Container = forwardRef<HTMLDivElement, ContainerProps>(
-  ({ size = 'lg', center = true, style, className, ...props }, ref) => {
-    const computedStyle: React.CSSProperties = {
-      width: '100%',
-      maxWidth: sizeMap[size],
-      ...(center && { marginLeft: 'auto', marginRight: 'auto' }),
-      paddingLeft: 'var(--space-base)',
-      paddingRight: 'var(--space-base)',
-      ...style,
-    };
-
+  ({ size = 'lg', center = true, className, children, ...props }, ref) => {
     return (
       <div
         ref={ref}
-        style={computedStyle}
-        className={className}
+        className={cn(
+          'w-full px-4 md:px-6', // Base styles with responsive padding
+          center && 'mx-auto',
+          sizeMap[size],
+          className
+        )}
         {...props}
-      />
+      >
+        {children}
+      </div>
     );
   }
 );

@@ -22,6 +22,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "postcss": "^8",
+    "shiki-magic-move": "^1.3.0",
     "tailwindcss": "^4",
     "typescript": "^5.1.0"
   }

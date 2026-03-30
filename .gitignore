@@ -42,6 +42,9 @@ next-env.d.ts
 # planning (not tracked)
 .planning/
 
+# claude code
+CLAUDE.md
+
 # test apps and builds
 kalkidesign-test/
 *.tgz

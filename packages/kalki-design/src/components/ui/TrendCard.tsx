@@ -1,7 +1,7 @@
 "use client";
 
 import { TrendUp, TrendDown, Info } from "@phosphor-icons/react";
-import { Tooltip } from "./Tooltip";
+import { Tooltip } from "../Tooltip";
 
 export function TrendCard({
   label,
