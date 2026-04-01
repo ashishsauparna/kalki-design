@@ -72,9 +72,9 @@ export function DocsHeader() {
   const crumbs = buildBreadcrumbs(pathname)
 
   return (
-    <header className="flex items-center justify-between pt-[40px] shrink-0 w-full">
+    <header className="hidden md:flex items-center justify-between pt-[40px] shrink-0 w-full">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-[4px]" aria-label="Breadcrumb">
+      <nav className="flex min-w-0 items-center gap-[4px]" aria-label="Breadcrumb">
         {crumbs.map((crumb, i) => {
           const isLast = i === crumbs.length - 1
           const isFirst = i === 0
@@ -89,11 +89,11 @@ export function DocsHeader() {
                   <HouseLine size={16} />
                 </Link>
               ) : isLast ? (
-                <span className="text-[14px] font-medium text-[#161616] whitespace-nowrap">
+                <span className="text-[14px] font-medium text-[#161616] whitespace-nowrap truncate max-w-[220px] lg:max-w-none">
                   {crumb.label}
                 </span>
               ) : (
-                <Link href={crumb.href} className="text-[14px] font-medium text-[#535353] hover:text-[#161616] whitespace-nowrap transition-colors">
+                <Link href={crumb.href} className="text-[14px] font-medium text-[#535353] hover:text-[#161616] whitespace-nowrap transition-colors truncate max-w-[180px] lg:max-w-none">
                   {crumb.label}
                 </Link>
               )}
@@ -103,12 +103,12 @@ export function DocsHeader() {
       </nav>
 
       {/* Actions */}
-      <div className="flex items-center gap-[16px]">
+      <div className="flex items-center gap-[12px] lg:gap-[16px]">
         <Link
           href="https://github.com/kalki-design/kalki-design"
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-[4px] text-[14px] font-medium text-[#161616] hover:text-[#535353] transition-colors"
+          className="hidden lg:flex items-center gap-[4px] text-[14px] font-medium text-[#161616] hover:text-[#535353] transition-colors"
         >
           <GithubLogo size={16} />
           <span>Git Repository</span>

@@ -9,8 +9,8 @@ interface DocsWithTocProps {
 
 export function DocsWithToc({ children, links, contentClassName = 'space-y-8' }: DocsWithTocProps) {
   return (
-    <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_220px]">
-      <div className={contentClassName}>{children}</div>
+    <div className="grid min-w-0 gap-8 xl:grid-cols-[minmax(0,1fr)_220px]">
+      <div className={`min-w-0 ${contentClassName}`}>{children}</div>
       <aside className="hidden xl:block">
         <div className="sticky top-24 rounded-[10px] bg-background p-3">
           <p className="text-[12px] font-semibold uppercase tracking-[0.2px] text-muted-foreground">

@@ -57,7 +57,7 @@ export function ComponentPreview({
   const showKnobs = !hideKnobs && meta.knobs.length > 0
 
   return (
-    <div className="overflow-hidden rounded-xl border border-border">
+    <div className="min-w-0 overflow-hidden rounded-xl border border-border">
       {/* Controls bar */}
       {showKnobs && (
         <div className="border-b border-[#e4e4e7] bg-[#fafafa] px-4 py-3 dark:border-border dark:bg-muted/10">
@@ -70,7 +70,7 @@ export function ComponentPreview({
       )}
 
       {/* Live preview */}
-      <div className="flex min-h-[280px] items-center justify-center bg-background p-10">
+      <div className="flex min-h-[220px] min-w-0 items-center justify-start overflow-x-auto bg-background p-4 sm:min-h-[240px] sm:justify-center sm:p-6 md:min-h-[280px] md:p-10">
         {renderPreview(knobValues)}
       </div>
 

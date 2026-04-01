@@ -16,7 +16,7 @@ export function SelectDemo({ meta }: SelectDemoProps) {
       renderPreview={(props) => (
         <div className="w-full max-w-xs">
           <Select disabled={props.disabled as boolean | undefined}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full sm:w-[180px]">
               <SelectValue placeholder="Select a fruit" />
             </SelectTrigger>
             <SelectContent>
@@ -50,7 +50,7 @@ export function SelectDemo({ meta }: SelectDemoProps) {
 } from 'kalki-design'
 
 <Select>
-  <SelectTrigger className="w-[180px]">
+  <SelectTrigger className="w-full sm:w-[180px]">
     <SelectValue placeholder="Select a fruit" />
   </SelectTrigger>
   <SelectContent>

@@ -29,7 +29,7 @@ export function KnobPanel({ knobs, values, onChange }: KnobPanelProps) {
       .replace(/\b\w/g, (c) => c.toUpperCase())
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {knobs.map((knob) => {
         const value = values[knob.name]
         const fieldLabel = toLabel(knob.name)

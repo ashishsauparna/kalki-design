@@ -27,8 +27,10 @@ export default function RootLayout({
           <ToastProvider>
             <div className="flex h-screen overflow-hidden bg-background font-sans antialiased">
               <CommandPalette />
-              <Sidebar />
-              <div id="docs-scroll-container" className="flex-1 overflow-y-auto">
+              <div className="hidden md:block">
+                <Sidebar />
+              </div>
+              <div id="docs-scroll-container" className="min-w-0 flex-1 overflow-y-auto overflow-x-hidden">
                 {children}
               </div>
               <Toaster position="bottom-right" />

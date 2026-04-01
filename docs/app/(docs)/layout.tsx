@@ -7,14 +7,14 @@ export default function DocsLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col min-h-full w-full">
+    <div className="flex min-h-full w-full min-w-0 flex-col">
       <div className="md:hidden px-4 py-3 border-b border-[#dcdcdc] flex items-center gap-4">
         <MobileNav />
         <span className="font-medium text-sm">Documentation</span>
       </div>
-      <div className="flex-1 w-full max-w-[860px] mx-auto px-8 flex flex-col">
+      <div className="mx-auto flex w-full min-w-0 max-w-[860px] flex-1 flex-col px-4 sm:px-6 md:px-8">
         <DocsHeader />
-        <main className="flex-1 pt-[53px] pb-10">
+        <main className="min-w-0 flex-1 pt-6 pb-10 md:pt-[53px]">
           {children}
         </main>
       </div>
