@@ -213,6 +213,12 @@ export default function Example() {
     ],
     knobs: [
       {
+        name: 'view',
+        type: 'select',
+        options: ['form', 'media'],
+        default: 'form',
+      },
+      {
         name: 'hoverable',
         type: 'boolean',
         default: false,
