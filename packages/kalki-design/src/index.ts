@@ -34,6 +34,7 @@ export { Avatar, type AvatarProps, type AvatarGroupProps } from './components/Av
 export { Skeleton, type SkeletonProps } from './components/Skeleton'
 export { Progress, CircularProgress, type ProgressProps, type CircularProgressProps } from './components/Progress'
 export { Pagination, type PaginationProps } from './components/Pagination'
+export { KpiGrid, KpiTrendBadge, KpiStatCard, KpiProgressCard, KpiComparisonCard, type KpiGridProps, type KpiTrendBadgeProps, type KpiStatCardProps, type KpiProgressCardProps, type KpiComparisonCardProps, type KpiTrendDirection, type KpiCardLayout } from './components/KPI'
 export { Slider, type SliderProps } from './components/Slider'
 export { DatePicker, type DatePickerProps } from './components/DatePicker'
 export { Dropzone, dropzoneUid, type DropzoneProps, type DropzoneFile } from './components/Dropzone'

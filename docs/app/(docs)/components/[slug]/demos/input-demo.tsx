@@ -21,7 +21,7 @@ export function InputDemo({ meta }: InputDemoProps) {
               <Input
                 label={(props.label as string) || undefined}
                 placeholder={(props.placeholder as string) || undefined}
-                size={(props.size as 'sm' | 'md' | 'lg') || 'lg'}
+                size={(props.size as 'sm' | 'md' | 'lg') || 'md'}
                 error={(props.error as string) || undefined}
                 disabled={props.disabled as boolean | undefined}
               />

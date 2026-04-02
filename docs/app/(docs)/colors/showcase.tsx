@@ -541,6 +541,19 @@ const COLOR_SCALES: ColorScale[] = [
   },
 ]
 
+const COLOR_SCALE_DISPLAY_ORDER = [
+  'Neutral',
+  'Success',
+  'Warning',
+  'Destructive',
+  'Info',
+  'Brand',
+] as const
+
+const COLOR_SCALE_ORDER_INDEX: ReadonlyMap<string, number> = new Map(
+  COLOR_SCALE_DISPLAY_ORDER.map((name, index) => [name, index])
+)
+
 function getTokenGroup(token: ColorToken): TokenGroupId {
   if (token.figmaToken.startsWith('Color/Chart/')) return 'chart'
   if (
@@ -644,25 +657,20 @@ function ShadeSwatch({
     <button
       type="button"
       onClick={copy}
-      className="rounded-[8px] border border-border bg-background p-2 text-left hover:bg-muted/30"
+      className="group flex flex-col text-left hover:brightness-95 transition-all"
       aria-label={`Copy ${mode} ${label} hex ${value}`}
       title={`Copy ${mode} ${label} hex ${value}`}
     >
       <div
-        className="h-7 rounded-[6px] border"
-        style={{ backgroundColor: value, borderColor: BORDER_HEX_BY_MODE[mode] }}
+        className="h-10 w-full border-r border-border last:border-r-0"
+        style={{ backgroundColor: value }}
       />
-      <div className="mt-1 flex items-center justify-between">
+      <div className="border-t border-r border-border last:border-r-0 px-2 py-1.5">
         <span className="font-mono text-[11px] text-muted-foreground">{label}</span>
-        {copied ? (
-          <Check size={12} className="text-foreground" />
-        ) : (
-          <CopySimple size={12} className="text-muted-foreground" />
-        )}
+        <p className="truncate font-mono text-[10px] text-foreground">
+          {copied ? 'Copied!' : value}
+        </p>
       </div>
-      <p className="mt-0.5 truncate font-mono text-[11px] text-foreground">
-        {copied ? 'Copied' : value}
-      </p>
     </button>
   )
 }
@@ -670,6 +678,11 @@ function ShadeSwatch({
 export function ColorsShowcase() {
   const [mode, setMode] = useState<ColorMode>('light')
   const [view, setView] = useState<ColorView>('semantic')
+  const orderedColorScales = [...COLOR_SCALES].sort((a, b) => {
+    const aIndex = COLOR_SCALE_ORDER_INDEX.get(a.name) ?? Number.MAX_SAFE_INTEGER
+    const bIndex = COLOR_SCALE_ORDER_INDEX.get(b.name) ?? Number.MAX_SAFE_INTEGER
+    return aIndex - bIndex
+  })
 
   return (
     <div className="space-y-3">
@@ -724,23 +737,21 @@ export function ColorsShowcase() {
                     return (
                       <div
                         key={token.figmaToken}
-                        className="rounded-[10px] border border-border bg-background p-3"
+                        className="rounded-[10px] border border-border bg-background overflow-hidden"
                       >
-                        <div className="pb-3">
-                          <div
-                            className="inline-flex h-10 min-w-[120px] items-center justify-center rounded-[8px] border px-3"
-                            style={{
-                              backgroundColor: utilityHex,
-                              borderColor: BORDER_HEX_BY_MODE[mode],
-                            }}
-                          >
-                            <span className="text-[13px] font-medium" style={{ color: textHex }}>
-                              {token.label}
-                            </span>
-                          </div>
+                        <div
+                          className="flex h-12 items-center px-3"
+                          style={{
+                            backgroundColor: utilityHex,
+                            borderBottom: `1px solid ${BORDER_HEX_BY_MODE[mode]}`,
+                          }}
+                        >
+                          <span className="text-[13px] font-medium" style={{ color: textHex }}>
+                            {token.label}
+                          </span>
                         </div>
 
-                        <div className="space-y-2.5">
+                        <div className="space-y-2.5 p-3">
                           <MetaField label="CSS var" value={token.cssVar} />
                           <div className="grid gap-x-4 gap-y-2 sm:grid-cols-2">
                             <MetaFieldWithHex
@@ -769,13 +780,13 @@ export function ColorsShowcase() {
             Ten-shade color scales for design exploration. Click any swatch to copy its hex code.
           </p>
           <div className="space-y-3">
-            {COLOR_SCALES.map((scale) => (
-              <div key={scale.name} className="rounded-[10px] border border-border bg-background p-3">
-                <div className="mb-2.5">
+            {orderedColorScales.map((scale) => (
+              <div key={scale.name} className="rounded-[10px] border border-border bg-background overflow-hidden">
+                <div className="px-3 pt-3 pb-2.5">
                   <p className="text-[13px] font-medium text-foreground">{scale.name}</p>
                   <p className="text-[12px] text-muted-foreground">{scale.tokenName}</p>
                 </div>
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-5 xl:grid-cols-10">
+                <div className="grid grid-cols-2 gap-0 sm:grid-cols-5 xl:grid-cols-10">
                   {scale.shades.map((shade) => (
                     <ShadeSwatch
                       key={shade.step}

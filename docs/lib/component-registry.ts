@@ -135,7 +135,7 @@ export default function Example() {
       {
         name: 'size',
         type: "'sm' | 'md' | 'lg'",
-        default: "'lg'",
+        default: "'md'",
         description: 'Height of the input field: sm (28px), md (32px), lg (36px).',
       },
       {
@@ -171,7 +171,7 @@ export default function Example() {
         name: 'size',
         type: 'select',
         options: ['sm', 'md', 'lg'],
-        default: 'lg',
+        default: 'md',
       },
       {
         name: 'error',
@@ -528,6 +528,71 @@ export default function Example() {
       { name: 'size', type: 'select', options: ['sm', 'md', 'lg'], default: 'md' },
       { name: 'siblingCount', type: 'select', options: ['0', '1', '2'], default: '1' },
       { name: 'showEdges', type: 'boolean', default: true },
+    ],
+  },
+  {
+    slug: 'kpi',
+    name: 'KPI',
+    description: 'Dashboard-ready key performance indicator cards for stat and progress use cases.',
+    category: 'Data Display',
+    importName: 'KpiStatCard',
+    usageExample: `import { Info } from '@phosphor-icons/react'
+import { KpiGrid, KpiProgressCard, KpiStatCard, Tooltip } from 'kalki-design'
+
+const infoIcon = (
+  <Tooltip content="More info">
+    <Info size={14} weight="regular" />
+  </Tooltip>
+)
+
+export default function Example() {
+  return (
+    <KpiGrid columns={2}>
+      <KpiStatCard
+        title="Open Orders"
+        value="$18"
+        change="+3 vs last month"
+        trend="up"
+        icon={infoIcon}
+      />
+
+      <KpiProgressCard
+        title="Credit Balance"
+        value="$728K"
+        subtitle="78.5% of $1M credit limit used"
+        progress={78.5}
+        progressGradient="linear-gradient(to left, #DE1010 0%, rgba(222,16,16,0.4) 17.788%, rgba(222,16,16,0.4) 100%)"
+        icon={infoIcon}
+      />
+    </KpiGrid>
+  )
+}`,
+    props: [
+      { name: 'KpiStatCard', type: 'Component', description: 'Shows title, value, trend delta, and optional sparkline/icon.' },
+      { name: 'KpiProgressCard', type: 'Component', description: 'Shows KPI value with a progress bar and completion label.' },
+      { name: 'KpiTrendBadge', type: 'Component', description: 'Compact trend badge for up/down/neutral states.' },
+      { name: 'KpiGrid', type: 'Component', description: 'Responsive KPI layout grid with 1-4 column options.' },
+    ],
+    knobs: [
+      { name: 'variant', type: 'select', options: ['stat', 'progress'], default: 'stat' },
+      { name: 'cardWidth', type: 'select', options: ['320', '280'], default: '320' },
+      { name: 'trend', type: 'select', options: ['up', 'down', 'neutral'], default: 'up' },
+      { name: 'label', type: 'text', default: 'Open Orders' },
+      { name: 'number', type: 'text', default: '18' },
+      { name: 'percentage', type: 'text', default: '78.5' },
+      {
+        name: 'progressColor',
+        type: 'select',
+        options: [
+          'brand',
+          'success',
+          'warning',
+          'destructive',
+          'info',
+        ],
+        default: 'destructive',
+      },
+      { name: 'showInfo', type: 'boolean', default: true },
     ],
   },
   {

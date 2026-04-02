@@ -20,7 +20,7 @@ function ThemeIcon() {
     <button
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-      className="flex items-center justify-center size-[32px] rounded-[8px] text-[#535353] hover:bg-[#f3f3f3] transition-colors"
+      className="flex size-[32px] items-center justify-center rounded-[8px] text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground"
     >
       {isDark ? (
         /* Sun */
@@ -82,18 +82,18 @@ export function DocsHeader() {
           return (
             <span key={i} className="flex items-center gap-[4px]">
               {i > 0 && (
-                <CaretRight size={10} className="text-[#535353] shrink-0" />
+                <CaretRight size={10} className="shrink-0 text-muted-foreground" />
               )}
               {isFirst ? (
-                <Link href={crumb.href} aria-label="Home" className="flex items-center text-[#535353] hover:text-[#161616] transition-colors">
+                <Link href={crumb.href} aria-label="Home" className="flex items-center text-muted-foreground transition-colors hover:text-foreground">
                   <HouseLine size={16} />
                 </Link>
               ) : isLast ? (
-                <span className="text-[14px] font-medium text-[#161616] whitespace-nowrap truncate max-w-[220px] lg:max-w-none">
+                <span className="max-w-[220px] truncate whitespace-nowrap text-[14px] font-medium text-foreground lg:max-w-none">
                   {crumb.label}
                 </span>
               ) : (
-                <Link href={crumb.href} className="text-[14px] font-medium text-[#535353] hover:text-[#161616] whitespace-nowrap transition-colors truncate max-w-[180px] lg:max-w-none">
+                <Link href={crumb.href} className="max-w-[180px] truncate whitespace-nowrap text-[14px] font-medium text-muted-foreground transition-colors hover:text-foreground lg:max-w-none">
                   {crumb.label}
                 </Link>
               )}
@@ -103,15 +103,17 @@ export function DocsHeader() {
       </nav>
 
       {/* Actions */}
-      <div className="flex items-center gap-[12px] lg:gap-[16px]">
+      <div className="flex shrink-0 items-center gap-[12px] lg:gap-[16px]">
         <Link
           href="https://github.com/kalki-design/kalki-design"
           target="_blank"
           rel="noreferrer"
-          className="hidden lg:flex items-center gap-[4px] text-[14px] font-medium text-[#161616] hover:text-[#535353] transition-colors"
+          className="inline-flex items-center gap-1 rounded-md px-1.5 py-1 text-[14px] font-medium text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground"
+          aria-label="Open Git repository"
+          title="Git Repository"
         >
           <GithubLogo size={16} />
-          <span>Git Repository</span>
+          <span className="hidden xl:inline">Git Repository</span>
         </Link>
         <ThemeIcon />
       </div>

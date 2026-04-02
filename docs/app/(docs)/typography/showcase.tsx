@@ -341,6 +341,7 @@ export function TypographyShowcase() {
         activeTab={activeTab}
         onChange={(id) => setActiveTab(id as ViewportKey)}
         variant="pills"
+        size="sm"
       />
 
       {TYPE_SCALES.map((scale) => (

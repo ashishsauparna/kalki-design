@@ -132,7 +132,7 @@ export function ButtonDemo({ meta: _ }: ButtonDemoProps) {
           <div className="flex w-full flex-col items-start gap-1.5">
             <ControlLabel>Size</ControlLabel>
             <Select value={size} onValueChange={(v: string) => setSize(v as SizeOption)}>
-              <SelectTrigger size="sm" className="w-full">
+              <SelectTrigger size="md" className="w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -147,7 +147,7 @@ export function ButtonDemo({ meta: _ }: ButtonDemoProps) {
           <div className="flex w-full flex-col items-start gap-1.5">
             <ControlLabel>Icon</ControlLabel>
             <Select value={icon} onValueChange={(v: string) => setIcon(v as IconOption)}>
-              <SelectTrigger size="sm" className="w-full">
+              <SelectTrigger size="md" className="w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

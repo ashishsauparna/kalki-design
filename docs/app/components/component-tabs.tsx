@@ -51,10 +51,12 @@ export function ComponentTabs({ component, children }: ComponentTabsProps) {
                 {
                   label: 'CLI',
                   code: `npx kalki-design add ${component.slug}`,
+                  lang: 'bash',
                 },
                 {
                   label: 'Manual',
                   code: `// Ensure you have configured kalki-design in your project first.\n// Copy the component code from the repository into your project:\n// components/ui/${component.slug}.tsx`,
+                  lang: 'tsx',
                 },
               ]}
             />

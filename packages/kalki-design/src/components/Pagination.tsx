@@ -116,7 +116,7 @@ const Pagination = forwardRef<HTMLElement, PaginationProps>(
                   className={cn(
                     itemBaseClass,
                     p === page 
-                      ? 'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground pointer-events-none'
+                      ? 'border border-primary bg-primary text-primary-foreground shadow-sm pointer-events-none'
                       : 'text-foreground hover:bg-accent hover:text-accent-foreground'
                   )}
                   onClick={() => onChange(p as number)}

@@ -48,7 +48,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             className={cn(
               'peer relative z-10 size-4 shrink-0 rounded border border-input bg-transparent ring-offset-background appearance-none transition-colors cursor-pointer',
               'checked:border-primary',
-              'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-1 focus-visible:ring-offset-background',
               'disabled:cursor-not-allowed disabled:opacity-50',
               hasError && 'border-destructive focus-visible:ring-destructive',
               className
@@ -56,7 +56,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             {...props}
           />
           {/* Filled background — sibling after peer input, z-index behind input */}
-          <div className="absolute inset-0 size-4 rounded bg-white pointer-events-none peer-checked:bg-primary transition-colors z-0" />
+          <div className="absolute inset-0 size-4 rounded bg-background pointer-events-none peer-checked:bg-primary transition-colors z-0" />
           {/* Checkmark SVG — above everything */}
           <svg
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-3 text-primary-foreground pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity z-20"

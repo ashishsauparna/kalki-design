@@ -144,7 +144,7 @@ const Slider = forwardRef<HTMLDivElement, SliderProps>(
         )}
         <div
           ref={trackRef}
-          className="relative h-1.5 w-full grow overflow-visible rounded-full bg-primary/20 cursor-pointer my-2"
+          className="relative my-2 h-1.5 w-full grow cursor-pointer overflow-visible rounded-full bg-muted"
           role="presentation"
         >
           <div
@@ -162,8 +162,8 @@ const Slider = forwardRef<HTMLDivElement, SliderProps>(
               aria-label={label || `Slider thumb ${i + 1}`}
               aria-disabled={disabled || undefined}
               className={cn(
-                'absolute top-1/2 w-4 h-4 -translate-x-1/2 -translate-y-1/2 block rounded-full border border-primary/50 bg-background shadow-sm transition-[box-shadow,color,border-color] cursor-grab outline-none touch-none focus-visible:ring-1 focus-visible:ring-ring active:cursor-grabbing disabled:pointer-events-none disabled:opacity-50',
-                draggingIndex === i && 'ring-4 ring-black/20'
+                'absolute top-1/2 block h-4 w-4 -translate-x-1/2 -translate-y-1/2 cursor-grab rounded-full border border-input bg-background shadow-sm transition-[box-shadow,color,border-color] touch-none outline-none focus-visible:ring-2 focus-visible:ring-ring/60 active:cursor-grabbing disabled:pointer-events-none disabled:opacity-50',
+                draggingIndex === i && 'ring-4 ring-ring/40'
               )}
               style={{ left: `${getPercent(val)}%` }}
               onPointerDown={handlePointerDown(i)}

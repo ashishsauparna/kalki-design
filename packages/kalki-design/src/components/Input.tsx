@@ -26,7 +26,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
       className,
-      size = 'lg',
+      size = 'md',
       label,
       helperText,
       error,
@@ -38,8 +38,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       value,
       defaultValue,
       onChange,
-      onFocus,
-      onBlur,
       disabled,
       ...props
     },
@@ -112,29 +110,23 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={inputRef}
             value={isControlled ? value : internalValue}
             onChange={handleChange}
-            onFocus={(e) => {
-              e.currentTarget.style.borderColor = '#000'
-              onFocus?.(e)
-            }}
-            onBlur={(e) => {
-              e.currentTarget.style.borderColor = ''
-              onBlur?.(e)
-            }}
             disabled={disabled}
             aria-invalid={hasError || undefined}
             aria-describedby={displayHelper ? helperId : undefined}
             className={cn(
-              'flex w-full min-w-0 rounded-md border border-input bg-white py-1 text-foreground shadow-xs transition-[border-color,color,box-shadow] outline-none',
+              'flex w-full min-w-0 rounded-md border border-input bg-background py-1 text-foreground shadow-xs transition-[border-color,color,box-shadow] outline-none',
               sizeClass,
               'file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground',
               'placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground',
-              'focus:!border-[#000] focus:ring-ring/50 focus:ring-[3px]',
-              'focus-visible:!border-[#000] focus-visible:ring-ring/50 focus-visible:ring-[3px]',
-              'active:!border-[#000] active:ring-ring/30 active:ring-[2px]',
+              'focus:ring-ring/50 focus:ring-[3px]',
+              'focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+              'active:ring-ring/30 active:ring-[2px]',
+              !hasError &&
+                'focus:!border-black dark:focus:!border-white focus-visible:!border-black dark:focus-visible:!border-white active:!border-black dark:active:!border-white',
               'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
               'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
               hasError &&
-                'border-destructive focus:ring-destructive/20 dark:focus:ring-destructive/40 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 active:ring-destructive/20',
+                'border-destructive focus:!border-destructive focus-visible:!border-destructive active:!border-destructive focus:ring-destructive/20 dark:focus:ring-destructive/40 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 active:ring-destructive/20',
               iconLeft && 'pl-9',
               (showClear || iconRight) && 'pr-8',
               className

@@ -33,6 +33,11 @@ const resourceItems = [
     href: '/typography',
   },
   {
+    title: 'Iconography',
+    description: 'Browse the Kalki icon set with weight variants and copy-ready usage snippets.',
+    href: '/iconography',
+  },
+  {
     title: 'Validation',
     description: 'Learn field-level and form-level validation patterns and messaging rules.',
     href: '/validation',

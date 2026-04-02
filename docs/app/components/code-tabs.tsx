@@ -6,6 +6,7 @@ import { DynamicCodeBlock } from './dynamic-code-block'
 interface Tab {
   label: string
   code: string
+  lang?: string
 }
 
 interface CodeTabsProps {
@@ -18,8 +19,8 @@ export function CodeTabs({ tabs }: CodeTabsProps) {
   if (!tabs || tabs.length === 0) return null
 
   return (
-    <div className="flex flex-col rounded-lg overflow-hidden bg-[#f9f9f9] dark:bg-background">
-      <div className="flex items-center gap-1 border-b border-[#dcdcdc] dark:border-border px-4 py-2 overflow-x-auto bg-[#f0f0f0] dark:bg-muted/50">
+    <div className="flex flex-col overflow-hidden rounded-lg bg-muted/20">
+      <div className="flex items-center gap-1 overflow-x-auto border-b border-border bg-muted/30 px-4 py-2">
         {tabs.map((tab, idx) => (
           <button
             key={idx}
@@ -28,8 +29,8 @@ export function CodeTabs({ tabs }: CodeTabsProps) {
               px-3 py-1.5 text-sm font-medium rounded-md transition-colors
               ${
                 activeIndex === idx
-                  ? 'bg-white dark:bg-background text-[#161616] dark:text-foreground shadow-sm ring-1 ring-[#dcdcdc] dark:ring-border'
-                  : 'text-[#535353] dark:text-muted-foreground hover:text-[#161616] dark:hover:text-foreground hover:bg-[#e8e8e8] dark:hover:bg-muted'
+                  ? 'bg-background text-foreground shadow-sm ring-1 ring-border'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
               }
             `}
           >
@@ -38,7 +39,7 @@ export function CodeTabs({ tabs }: CodeTabsProps) {
         ))}
       </div>
       <div className="-mx-px -mb-px -mt-px">
-        <DynamicCodeBlock code={tabs[activeIndex].code} transparentBg />
+        <DynamicCodeBlock code={tabs[activeIndex].code} lang={tabs[activeIndex].lang} transparentBg />
       </div>
     </div>
   )

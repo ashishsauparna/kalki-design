@@ -23,6 +23,7 @@ import { AvatarDemo } from './demos/avatar-demo'
 import { SkeletonDemo } from './demos/skeleton-demo'
 import { ProgressDemo } from './demos/progress-demo'
 import { PaginationDemo } from './demos/pagination-demo'
+import { KpiDemo } from './demos/kpi-demo'
 import { SliderDemo } from './demos/slider-demo'
 import { DatePickerDemo } from './demos/datepicker-demo'
 import { DropzoneDemo } from './demos/dropzone-demo'
@@ -47,6 +48,7 @@ const demoMap: Record<string, React.ComponentType<{ meta: ComponentMeta }>> = {
   skeleton: SkeletonDemo,
   progress: ProgressDemo,
   pagination: PaginationDemo,
+  kpi: KpiDemo,
   slider: SliderDemo,
   datepicker: DatePickerDemo,
   dropzone: DropzoneDemo,
@@ -92,12 +94,11 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
       <section id="overview" className="scroll-mt-24">
         <h1 className="text-[20px] font-semibold text-[#161616] dark:text-foreground">{component.name}</h1>
         <p className="mt-2 text-[14px] text-[#535353] dark:text-muted-foreground">{component.description}</p>
-      </section>
-
-      <section id="component-docs" className="scroll-mt-24 border-t border-border pt-6">
-        <ComponentTabs component={component}>
-          {demoContent}
-        </ComponentTabs>
+        <div id="component-docs" className="mt-6 scroll-mt-24">
+          <ComponentTabs component={component}>
+            {demoContent}
+          </ComponentTabs>
+        </div>
       </section>
     </DocsWithToc>
   )

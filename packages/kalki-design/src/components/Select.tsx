@@ -150,14 +150,16 @@ const SelectTrigger = React.forwardRef<HTMLButtonElement, SelectTriggerProps>(
         data-placeholder={!value ? '' : undefined}
         disabled={disabled || props.disabled}
         className={cn(
-          'flex w-full items-center justify-between rounded-md border border-input bg-background shadow-xs transition-[color,box-shadow] outline-none',
+          'flex w-full items-center justify-between rounded-md border border-input bg-background shadow-xs transition-[border-color,color,box-shadow] outline-none',
           size === 'sm'
             ? 'h-7 px-2 text-xs'
             : size === 'lg'
               ? 'h-9 px-3 text-sm'
               : 'h-8 px-3 text-sm',
           'data-[placeholder]:text-muted-foreground',
-          'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+          'focus:border-[var(--foreground)] focus:ring-ring/50 focus:ring-[3px]',
+          'focus-visible:border-[var(--foreground)] focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+          'active:border-[var(--foreground)] active:ring-ring/30 active:ring-[2px]',
           'disabled:cursor-not-allowed disabled:opacity-50',
           '[&>span]:line-clamp-1',
           className

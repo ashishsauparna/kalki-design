@@ -47,8 +47,8 @@ export function CardDemo({ meta }: CardDemoProps) {
               </CardAction>
             </CardHeader>
             <CardContent className="space-y-3">
-              <Input label="Email" type="email" placeholder="m@example.com" size="lg" />
-              <Input label="Password" type="password" size="lg" />
+              <Input label="Email" type="email" placeholder="m@example.com" />
+              <Input label="Password" type="password" />
             </CardContent>
             <CardFooter className="flex-col gap-2 border-t">
               <Button variant="primary" size="md" fullWidth>

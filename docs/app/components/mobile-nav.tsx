@@ -114,6 +114,9 @@ export function MobileNav() {
                 <SidebarLink href="/theme">
                   Theme
                 </SidebarLink>
+                <SidebarLink href="/iconography">
+                  Iconography
+                </SidebarLink>
                 <SidebarLink href="/grid-layout">
                   Grid &amp; Layout
                 </SidebarLink>
