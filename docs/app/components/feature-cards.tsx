@@ -183,7 +183,7 @@ function ComponentsCard() {
   return (
     <FeatureCard title="Components" href="/components/button" span={2}>
       <div className="mt-4 flex flex-wrap gap-2">
-        {['Button', 'Input', 'Dialog', 'Select', 'Checkbox', 'Toast', 'Tabs', 'Table', 'Accordion', 'Tooltip', 'Avatar', 'Badge'].map((name) => (
+        {['Button', 'Input', 'Dialog', 'Select', 'Checkbox', 'Toast', 'Tabs', 'Table', 'Bar Chart', 'Line Chart', 'Stacked Bar', 'Tooltip'].map((name) => (
           <span
             key={name}
             className="rounded-full border border-border bg-muted/30 px-2.5 py-1 text-[12px] text-foreground"
@@ -193,7 +193,7 @@ function ComponentsCard() {
         ))}
       </div>
       <p className="mt-4 text-[13px] text-muted-foreground leading-relaxed">
-        24 production-ready components built for dashboards and data-heavy UIs.
+        27 production-ready components built for dashboards and data-heavy UIs.
       </p>
     </FeatureCard>
   )

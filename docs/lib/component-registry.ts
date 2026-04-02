@@ -414,6 +414,125 @@ export default function Example() {
     ],
   },
   {
+    slug: 'bar-chart',
+    name: 'Bar Chart',
+    description: 'A categorical bar graph for comparing values across labels.',
+    category: 'Data Display',
+    importName: 'BarChart',
+    usageExample: `import { BarChart } from 'kalki-design'
+
+const data = [
+  { label: 'Mon', value: 24 },
+  { label: 'Tue', value: 18 },
+  { label: 'Wed', value: 32 },
+  { label: 'Thu', value: 28 },
+  { label: 'Fri', value: 40 },
+]
+
+export default function Example() {
+  return <BarChart data={data} color="var(--chart-2)" showValueLabels />
+}`,
+    props: [
+      { name: 'data', type: 'ChartDatum[]', description: 'Data points containing label and numeric value.' },
+      { name: 'height', type: 'number', default: '220', description: 'Chart height in pixels.' },
+      { name: 'color', type: 'string', default: "'var(--chart-2)'", description: 'Bar fill color.' },
+      { name: 'accessibilityMode', type: "'default' | 'colorblind-safe'", default: "'default'", description: 'Applies pattern overlays and outlines for color-blind-safe readability.' },
+      { name: 'showGrid', type: 'boolean', default: 'true', description: 'Shows horizontal grid lines.' },
+      { name: 'showYAxisLabels', type: 'boolean', default: 'true', description: 'Shows Y-axis value labels.' },
+      { name: 'showValueLabels', type: 'boolean', default: 'false', description: 'Shows values above bars.' },
+    ],
+    knobs: [
+      { name: 'dataset', type: 'select', options: ['weekly', 'monthly'], default: 'weekly' },
+      { name: 'color', type: 'select', options: ['chart-1', 'chart-2', 'chart-3', 'success', 'warning'], default: 'chart-2' },
+      { name: 'accessibilityMode', type: 'select', options: ['default', 'colorblind-safe'], default: 'default' },
+      { name: 'showGrid', type: 'boolean', default: true },
+      { name: 'showYAxisLabels', type: 'boolean', default: true },
+      { name: 'showValueLabels', type: 'boolean', default: false },
+    ],
+  },
+  {
+    slug: 'line-chart',
+    name: 'Line Chart',
+    description: 'A trend line graph for visualizing changes over time.',
+    category: 'Data Display',
+    importName: 'LineChart',
+    usageExample: `import { LineChart } from 'kalki-design'
+
+const data = [
+  { label: 'Jan', value: 18 },
+  { label: 'Feb', value: 22 },
+  { label: 'Mar', value: 28 },
+  { label: 'Apr', value: 24 },
+  { label: 'May', value: 34 },
+  { label: 'Jun', value: 38 },
+]
+
+export default function Example() {
+  return <LineChart data={data} lineColor="var(--chart-3)" showArea />
+}`,
+    props: [
+      { name: 'data', type: 'ChartDatum[]', description: 'Data points containing label and numeric value.' },
+      { name: 'height', type: 'number', default: '220', description: 'Chart height in pixels.' },
+      { name: 'lineColor', type: 'string', default: "'var(--chart-3)'", description: 'Line stroke color.' },
+      { name: 'showArea', type: 'boolean', default: 'true', description: 'Renders an area fill below the line.' },
+      { name: 'smooth', type: 'boolean', default: 'true', description: 'Uses curved interpolation between points.' },
+      { name: 'showPoints', type: 'boolean', default: 'true', description: 'Shows point markers on each data point.' },
+    ],
+    knobs: [
+      { name: 'dataset', type: 'select', options: ['weekly', 'monthly'], default: 'monthly' },
+      { name: 'color', type: 'select', options: ['chart-1', 'chart-2', 'chart-3', 'success', 'warning'], default: 'chart-3' },
+      { name: 'showGrid', type: 'boolean', default: true },
+      { name: 'showArea', type: 'boolean', default: true },
+      { name: 'smooth', type: 'boolean', default: true },
+      { name: 'showPoints', type: 'boolean', default: true },
+    ],
+  },
+  {
+    slug: 'stacked-bar-chart',
+    name: 'Stacked Bar Chart',
+    description: 'A segmented bar graph to show part-to-whole composition inside each category.',
+    category: 'Data Display',
+    importName: 'StackedBarChart',
+    usageExample: `import { StackedBarChart } from 'kalki-design'
+
+const data = [
+  {
+    label: 'Claims Requested',
+    segments: [
+      { label: 'Damage', value: 3, color: 'var(--chart-1)' },
+      { label: 'Warranty', value: 4, color: 'var(--chart-2)' },
+      { label: 'Missing Items', value: 6, color: 'var(--chart-3)' },
+    ],
+  },
+]
+
+export default function Example() {
+  return (
+    <StackedBarChart
+      data={data}
+      showLegend
+      showTotals
+      accessibilityMode="colorblind-safe"
+    />
+  )
+}`,
+    props: [
+      { name: 'data', type: 'StackedChartDatum[]', description: 'Array of bars; each bar has multiple labeled segments.' },
+      { name: 'height', type: 'number', default: '240', description: 'Chart height in pixels.' },
+      { name: 'showLegend', type: 'boolean', default: 'true', description: 'Shows segment legend below chart.' },
+      { name: 'showTotals', type: 'boolean', default: 'false', description: 'Shows total value above each stacked bar.' },
+      { name: 'showGrid', type: 'boolean', default: 'true', description: 'Shows horizontal grid lines.' },
+      { name: 'accessibilityMode', type: "'default' | 'colorblind-safe'", default: "'default'", description: 'Applies patterns and outlines for color-blind-safe reading.' },
+    ],
+    knobs: [
+      { name: 'dataset', type: 'select', options: ['claims', 'operations'], default: 'claims' },
+      { name: 'showLegend', type: 'boolean', default: true },
+      { name: 'showTotals', type: 'boolean', default: true },
+      { name: 'showGrid', type: 'boolean', default: true },
+      { name: 'accessibilityMode', type: 'select', options: ['default', 'colorblind-safe'], default: 'default' },
+    ],
+  },
+  {
     slug: 'breadcrumbs',
     name: 'Breadcrumbs',
     description: 'Displays the path to the current resource using a hierarchy of links.',

@@ -36,6 +36,8 @@ import {
   GridFour,
   Gauge,
   Palette,
+  ChartBar,
+  ChartLineUp,
 } from '@phosphor-icons/react'
 import { componentRegistry } from '@/lib/component-registry'
 
@@ -92,6 +94,9 @@ const componentIconMap: Record<string, NavIcon> = {
   textarea:   GridFour,
   toast:      Bell,
   tooltip:    Question,
+  'bar-chart': ChartBar,
+  'line-chart': ChartLineUp,
+  'stacked-bar-chart': ChartBar,
 }
 
 export function Sidebar() {

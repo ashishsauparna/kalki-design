@@ -27,6 +27,9 @@ import { KpiDemo } from './demos/kpi-demo'
 import { SliderDemo } from './demos/slider-demo'
 import { DatePickerDemo } from './demos/datepicker-demo'
 import { DropzoneDemo } from './demos/dropzone-demo'
+import { BarChartDemo } from './demos/bar-chart-demo'
+import { LineChartDemo } from './demos/line-chart-demo'
+import { StackedBarChartDemo } from './demos/stacked-bar-chart-demo'
 
 const demoMap: Record<string, React.ComponentType<{ meta: ComponentMeta }>> = {
   button: ButtonDemo,
@@ -52,6 +55,9 @@ const demoMap: Record<string, React.ComponentType<{ meta: ComponentMeta }>> = {
   slider: SliderDemo,
   datepicker: DatePickerDemo,
   dropzone: DropzoneDemo,
+  'bar-chart': BarChartDemo,
+  'line-chart': LineChartDemo,
+  'stacked-bar-chart': StackedBarChartDemo,
 }
 
 export function generateStaticParams() {
